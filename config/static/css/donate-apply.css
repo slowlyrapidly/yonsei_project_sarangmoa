@@ -1,0 +1,127 @@
+
+
+        /* 기본 스타일 */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+
+        /* 상단 네비게이션 바 */
+        .nav{
+            background-color: #f1c995ee;
+            text-align: right;
+            font-size: small;
+        }
+        .navbar {
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+            background-color: white;
+            margin-left: 100px;
+            gap: 100px; /* 항목 간 여백 */
+        }
+
+
+        .navbar a {
+            text-decoration: none;
+            color: black;
+            font-weight: bold;
+        }
+        .header {
+            padding: 20px;
+            text-align: center;
+        }
+        .search {
+            display: flex;
+            justify-content: flex-end;
+        }
+       
+
+
+        /* 메인 컨테이너 */
+        .container {
+            width: 80%;
+            margin: auto;
+            padding-top: 2rem;
+        }
+
+
+
+
+
+
+        /* 사이드바 */
+        .sidebar {
+            width: 200px;
+            height: 50px;
+            padding: 10px;
+            background-color: black;
+            color: white;
+            text-align: center;
+            font-weight: bold;
+        }
+
+
+        /* 메인 콘텐츠 */
+        .main-content {
+            padding: 1rem;
+            border: 1px solid black;
+            margin-left: 220px;
+        }
+
+
+        .main-content h2 {
+            text-align: center;
+        }
+
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 1rem;
+        }
+
+
+        .input-group label {
+            margin-bottom: 0.5rem;
+        }
+
+
+        .input-group input,
+        .input-group textarea {
+            padding: 10px;
+            border: 1px solid #ddd;
+            width: 100%;
+        }
+
+
+        /* 하단 정보 */
+        .footer {
+            margin-top: 2rem;
+            padding: 2rem;
+            background-color:#f1c995ee;
+            display: flex;
+            justify-content: space-around;
+        }
+
+
+        .footer div {
+            text-align: center;
+        }
+
+
+        /* 버튼 */
+        .btn {
+            padding: 10px 20px;
+            background-color: white;
+            border: 1px solid black;
+            cursor: pointer;
+            display: block;
+            margin: 30px auto;
+            text-align: center;
+            font-weight: bold;
+        }
+   

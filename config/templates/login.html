@@ -1,0 +1,123 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+
+<style>
+    * {
+        margin: 0px;
+        padding: 0px;
+        box-sizing: border-box; /* 모든 요소에 box-sizing 적용 */
+    }
+
+    body {
+        background-image: url("{% static 'images/login-background.png' %}");
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        background-color: #f5f5f5;
+        font-family: Arial, sans-serif;
+    }
+
+    .login-box {
+        margin: 10% auto;
+        background-color: #ffffff;
+        padding: 30px 20px;
+        width: 400px;
+        height: 400px;
+        border-radius: 15px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        text-align: center;
+    }
+
+    .login-box h1 {
+        margin-bottom: 20px;
+        font-size: 1.8rem;
+        color: #333;
+    }
+
+    .login-box input,
+    .login-box button {
+        width: 80%; /* 동일한 너비 설정 */
+        box-sizing: border-box; /* padding과 border를 너비에 포함 */
+        padding: 10px;
+        margin: 10px 0;
+        border-radius: 10px;
+        font-size: 1rem;
+        outline: none;
+    }
+
+    .login-box input {
+        border: 1px solid #ccc;
+    }
+
+    .login-box input:focus {
+        border-color: #36a2eb;
+        box-shadow: 0 0 5px rgba(54, 162, 235, 0.3);
+    }
+
+    .login-box button {
+        border: none;
+        background-color: #272d2a;
+        color: white;
+        cursor: pointer;
+    }
+
+    .login-box button:hover {
+        background-color: #1c211f;
+    }
+
+    .login-box .options {
+        margin-top: 15px;
+        font-size: 0.9rem;
+        color: #666;
+    }
+
+    .login-box .options a {
+        color: #272d2a;
+        text-decoration: none;
+        margin: 0 10px;
+    }
+
+    .login-box .options a:hover {
+        text-decoration: underline;
+    }
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded",function (){
+       const em="{{ error | escapejs}}";
+       if(em){
+           alert(em);
+       }
+
+    });
+</script>
+
+<body>
+    {% include 'header.html' %}
+    <div class="login-box">
+        <h1 style=>Yonsei<br>
+        Sarang Moa</h1>
+        <form method="POST" action="{% url 'webapp:login' %}">
+            {% csrf_token %}
+            <input type="text" name="user_id" placeholder="아이디" required>
+            <input type="password" name="password" placeholder="비밀번호" required>
+            <button type="submit">로그인</button>
+        </form>
+        <div class="options">
+            <a href="#">아이디 찾기</a>
+            <a href="{% url 'webapp:signup' %}">회원가입</a>
+        </div>
+    </div>
+    {% include 'footer.html' %}
+
+</body>
+</html>

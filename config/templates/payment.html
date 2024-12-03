@@ -1,0 +1,198 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <title>결제 페이지</title>
+    <style>
+        /* 기존 CSS 유지 */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            background: linear-gradient(135deg, #f3f7fa, #e1edf4);
+            color: #333;
+        }
+        .header {
+            text-align: center;
+            margin: 20px 0;
+            color: #4a90e2;
+        }
+        .header h1 {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .payment-container {
+            text-align: center;
+            padding: 20px;
+            max-width: 800px;
+            margin: 10px auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        .payment-container h2 {
+            font-size: 1.7rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        .payment-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            max-width: 600px;
+            margin: 0 auto 20px;
+        }
+        .payment-option {
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            text-align: center;
+            font-weight: bold;
+            cursor: pointer;
+            background-color: #f9f9f9;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+        }
+        .payment-option.selected {
+            border-color: #4a90e2;
+            background-color: #e6f2fb;
+        }
+        .payment-option img {
+            width: 40px;
+            height: 40px;
+            margin-bottom: 10px;
+        }
+        .payment-option:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .info-text {
+            font-size: 0.9rem;
+            color: #555;
+            margin-bottom: 20px;
+        }
+        .info-text:hover {
+            text-decoration: underline;
+            cursor: pointer;
+        }
+        .pay-button {
+            padding: 15px 30px;
+            background-color: #4a90e2;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        .pay-button:hover {
+            background-color: #357abd;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .faq-section {
+            margin-top: 30px;
+            font-size: 0.9rem;
+            color: #555;
+            text-align: left;
+        }
+        .faq-section h3 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: #4a90e2;
+        }
+        .faq-section ul {
+            list-style-type: disc;
+            padding-left: 20px;
+        }
+        .faq-section ul li {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    {% include 'header.html' %}
+    <!-- 결제 페이지 내용 -->
+    <div class="payment-container">
+        <h2>결제 방법</h2>
+        <div class="payment-options">
+            <div class="payment-option" data-value="1">
+                <img src="{% static 'images/credit-card-icon.png' %}" alt="신용·체크카드">
+                <p>신용·체크카드</p>
+            </div>
+            <div class="payment-option" data-value="2">
+                <img src="{% static 'images/naverpay-icon.png' %}" alt="N Pay">
+                <p>N Pay</p>
+            </div>
+            <div class="payment-option" data-value="3">
+                <img src="{% static 'images/kakaopay-icon.png' %}" alt="KakaoPay">
+                <p>KakaoPay</p>
+            </div>
+            <div class="payment-option" data-value="4">
+                <img src="{% static 'images/tosspay-icon.png' %}" alt="TossPay">
+                <p>TossPay</p>
+            </div>
+            <div class="payment-option" data-value="5">
+                <img src="{% static 'images/virtual-account-icon.png' %}" alt="가상계좌">
+                <p>가상계좌</p>
+            </div>
+            <div class="payment-option" data-value="6">
+                <img src="{% static 'images/phone-icon.png' %}" alt="휴대폰">
+                <p>휴대폰</p>
+            </div>
+        </div>
+        <p class="info-text">신용카드 무이자 할부 안내 &gt;</p>
+        <button class="pay-button" id="pay-button">결제하기</button>
+    </div>
+    {% include 'footer.html' %}
+<script>
+    let selectedPaymentOption = null;
+
+    // 결제 옵션 선택
+    $('.payment-option').on('click', function () {
+        $('.payment-option').removeClass('selected');
+        $(this).addClass('selected');
+        selectedPaymentOption = $(this).data('value');
+    });
+
+    // 결제 버튼 클릭 시 처리
+    $('#pay-button').on('click', function () {
+        if (selectedPaymentOption === null) {
+            alert('결제 수단을 선택해주세요.');
+            return;
+        }
+
+        const uid = '{{ uid }}';
+        const pid = '{{ pid }}';
+        const seller_id = '{{ seller_id }}';
+        $.ajax({
+            url: '{% url "webapp:process_payment" %}',
+            type: 'POST',
+            data: {
+                uid: uid,
+                pid: pid,
+                seller_id: seller_id,
+                pay_method: selectedPaymentOption,
+                csrfmiddlewaretoken: '{{ csrf_token }}'
+            },
+            success: function (response) {
+                alert('결제가 완료되었습니다.');
+                // 결제 성공 후 이동할 페이지 설정
+                window.location.href = '/webapp/payment_success/';
+            },
+            error: function (xhr, status, error) {
+                console.error(xhr.responseText);
+                alert('결제 처리 중 오류가 발생했습니다.');
+            }
+        });
+    });
+</script>
+
+</body>
+
+</html>

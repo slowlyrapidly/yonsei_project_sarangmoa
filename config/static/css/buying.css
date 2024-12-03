@@ -1,0 +1,167 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+/* 상단 네비게이션 바 */
+.nav {
+    background-color: #f1c995ee;
+    text-align: right;
+    font-size: small;
+    padding: 10px;
+}
+
+
+.navbar {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    background-color: white;
+    padding: 10px 0;
+    gap: 100px;
+}
+
+
+.navbar a {
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+}
+
+
+.header {
+    text-align: center;
+    margin: 20px 0;
+}
+
+
+/* 구매 페이지 레이아웃 */
+.purchase-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+    padding: 20px;
+}
+
+
+.product-image img {
+    width: 300px;
+    height: auto;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+
+.product-info {
+    text-align: center;
+    border: 1px solid #ddd;
+    padding: 20px;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+
+.product-info h2 {
+    margin: 0;
+}
+
+
+.product-info .price {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin: 10px 0;
+}
+
+
+.purchase-btn {
+    padding: 10px 20px;
+    background-color: black;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+
+.purchase-btn:hover {
+    background-color: #555;
+}
+
+
+/* 상품 상세정보 */
+.product-details {
+    text-align: center;
+    margin: 20px 0;
+}
+
+
+.product-details h3 {
+    font-size: 1.0rem;
+}
+
+
+.product-details p {
+    margin: 5px 0;
+}
+
+
+/* 관련 상품 레이아웃 */
+.related-products {
+    margin: 30px;
+}
+
+
+.related-products h3 {
+    text-align: center;
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+}
+
+
+.related-grid {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+
+.item {
+    width: 150px;
+    text-align: center;
+}
+
+
+.item img {
+    width: 150px;
+    height: auto;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+
+.item .price {
+    font-weight: bold;
+    color: #555;
+}
+
+
+/* 하단 정보 */
+.footer {
+    margin-top: 2rem;
+    padding: 2rem;
+    background-color: #f1c995ee;
+    display: flex;
+    justify-content: space-around;
+}
+
+
+.footer div {
+    text-align: center;
+}

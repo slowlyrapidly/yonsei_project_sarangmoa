@@ -1,0 +1,40 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+    <!--폰트-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500&display=swap" rel="stylesheet">
+     <!--폰트-->
+    <script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css" />
+
+</head>
+<body>
+{% include 'header.html' %}
+
+{#{% request %}#}
+{{ users }}
+{{ products }}
+{% for u in users %}
+{#<h1>{{ u.name }} {{ u.id }} {{ u.voluntary_point }}</h1>#}
+{% endfor %}
+
+{% for p in products %}
+<img src="{{ p.p_image.url }}" width="100px" height="100px">
+
+{% endfor %}
+<h1 class="hello">hello</h1>
+
+<div class="hello2">bye</div>
+
+
+{% include 'footer.html' %}
+</body>
+</html>

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Manage Notices</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f9;
+        }
+        h1 {
+            color: #333;
+        }
+        form {
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        label {
+            font-weight: bold;
+            display: block;
+            margin-top: 10px;
+        }
+        input[type="text"], textarea, input[type="file"] {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            background: blue;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: darkblue;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            background: #ffffff;
+            margin: 5px 0;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        .preview-image {
+            max-width: 200px;
+            margin-top: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+    </style>
+    <script>
+        function previewImage(event, targetId) {
+            const reader = new FileReader();
+            reader.onload = function() {
+                const output = document.getElementById(targetId);
+                output.src = reader.result;
+                output.style.display = 'block';
+            }
+            reader.readAsDataURL(event.target.files[0]);
+        }
+    </script>
+</head>
+<body>
+    {% include 'header.html' %}
+    <h1>공지사항 관리페이지</h1>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label>공지 제목:</label>
+        <input type="text" name="title" required>
+
+        <label>공지 내용:</label>
+        <textarea name="content" rows="10" required></textarea>
+
+{#        <label>Notice Image:</label>#}
+{#        <input type="file" name="notice_image" accept="image/*" onchange="previewImage(event, 'noticeImagePreview')">#}
+{#        <img id="noticeImagePreview" class="preview-image" style="display: none;">#}
+
+        <button type="submit">공지 등록</button>
+    </form>
+
+    <h2>공지사항 내역</h2>
+    <ul>
+        {% for notice in notices %}
+        <li>
+            <h2>{{ notice.title }}&nbsp;-&nbsp;
+                <a href="{% url 'webapp:update_notice' notice.id %}" style="color: blue;">수정</a>
+                <a href="{% url 'webapp:delete_notice' notice.id %}" onclick="return confirm('삭제하시겠습니까?');" style="color: red;">삭제</a>
+
+            </h2>
+            <br>
+            {{ notice.content }}
+            <br>
+{#            {% if notice.notice_image %}#}
+{#                <img src="{{ notice.notice_image.url }}" alt="Notice Image" class="preview-image">#}
+{#            {% endif %}#}
+        </li>
+        {% endfor %}
+    </ul>
+    {% include 'footer.html' %}
+</body>
+</html>

@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Page</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f4f8;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 95%;
+            max-width: 1200px;
+            margin: 40px auto;
+            background: linear-gradient(135deg, #ffffff, #f8fafd);
+            border-radius: 15px;
+            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.15);
+            padding: 20px 30px;
+        }
+        h1 {
+            text-align: center;
+            color: #ffffff;
+            margin-bottom: 30px;
+            font-size: 2.5rem;
+            font-weight: bold;
+            padding: 20px;
+            border-radius: 15px;
+            background-color: #272D2A;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+        }
+        h1::before {
+            content: "✨";
+            position: absolute;
+            top: -15px;
+            left: -15px;
+            font-size: 4rem;
+            color: rgba(255, 255, 255, 0.3);
+            animation: sparkle 3s infinite linear;
+        }
+        h1::after {
+            content: "🌟";
+            position: absolute;
+            bottom: -15px;
+            right: -15px;
+            font-size: 3.5rem;
+            color: rgba(255, 255, 255, 0.3);
+            animation: sparkle 3s infinite linear reverse;
+        }
+        @keyframes sparkle {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .info-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 25px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .info-table th, .info-table td {
+            padding: 15px 20px;
+            border-bottom: 1px solid #e0e7ef;
+            text-align: left;
+        }
+        .info-table th {
+            background-color: #f1f4f9;
+            font-weight: bold;
+            color: #4a6076;
+        }
+        .info-table td {
+            color: #555;
+            background-color: #fafcfe;
+        }
+        .info-table tr:last-child td {
+            border-bottom: none;
+        }
+        .section-title {
+            font-size: 1.4rem;
+            color: #ffffff;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: linear-gradient(45deg, #357abd, #4a90e2);
+            padding: 10px 15px;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+        }
+        .btn-container {
+            text-align: center;
+            margin-top: 30px;
+        }
+        .btn-container a {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 1rem;
+            color: #ffffff;
+            text-decoration: none;
+            background: #8fb398;
+            border-radius: 5px;
+            margin: 10px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+        .btn-container a:hover {
+            background: #7aa583;
+            transform: scale(1.02);
+        }
+    </style>
+</head>
+<body>
+    {% include 'header.html' %}
+    <div class="container">
+        <h1>My Page</h1>
+
+        <!-- 사용자 기본 정보 -->
+        <div class="section-title">사용자 정보</div>
+        <table class="info-table">
+            <tr>
+                <th>이름</th>
+                <td>{{ user.name }}</td>
+            </tr>
+            <tr>
+                <th>성별</th>
+                <td>
+                    {% if user.gender == 'M' %}
+                        남성
+                    {% elif user.gender == 'F' %}
+                        여성
+                    {% endif %}
+                </td>
+            </tr>
+
+            <tr>
+                <th>생년월일</th>
+                <td>{{ user.birth}}</td>
+            </tr>
+            <tr>
+                <th>주소</th>
+                <td>{{ user.address }}</td>
+            </tr>
+            <tr>
+                <th>봉사점수</th>
+                <td>{{ user.voluntary_point }} 점</td>
+            </tr>
+            <tr>
+                <th>마일리지</th>
+                <td>{{ user.mileage }} 포인트</td>
+            </tr>
+        </table>
+
+        <!-- 내 구매 목록 -->
+        <div class="section-title">내 구매 목록</div>
+        <table class="info-table">
+            {% if purchases %}
+                {% for purchase in purchases %}
+                   {% if purchase.pid.pid.status != -1 %}
+                        <tr>
+                            <td>{{ purchase.pid.pid.p_name }}</td>
+                            <td>{{ purchase.buy_date|date:"Y-m-d" }}</td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td colspan="2">구매 내역이 없습니다.</td>
+                </tr>
+            {% endif %}
+        </table>
+
+        <!-- 기부 신청 내역 -->
+        <div class="section-title">기부 신청 내역</div>
+        <table class="info-table">
+            <tr>
+                <th>물품명</th>
+                <th>신청 날짜</th>
+                <th>상태</th>
+            </tr>
+            {% if donations %}
+                {% for donation in donations %}
+                    {% if donation.pid.status != -1 %}
+
+                    <tr>
+                        <td>{{ donation.pid.p_name }}</td>
+                        <td>{{ donation.created_date|date:"Y-m-d" }}</td>
+                        <td>
+                            {% if donation.pid.status == 2 %}
+                                승인
+                            {% elif donation.pid.status == 0 %}
+                                대기중
+                                <a href="{% url 'webapp:update_product' donation.pid.pid %}" class="update_product"
+                                   style="margin-left:10px; background-color: #272d2a; color:white; border-radius: 5px; height: 40px; cursor: pointer; padding: 5px 10px; text-decoration: none;">
+                                    수정
+                                </a>
+                                <a href="{% url 'webapp:delete_product' donation.pid.pid %}"
+                                   onclick="return confirm('삭제하시겠습니까?');"
+                                   style="margin-left:10px; background-color: red; color:white; border-radius: 5px; height: 40px; cursor: pointer; padding: 5px 10px; text-decoration: none;">
+                                    삭제
+                                </a>
+                            {% elif donation.pid.status == 1%}
+                                <strong>반려</strong>
+                                <a href="{% url 'webapp:update_product' donation.pid.pid %}" class="update_product"
+                                   style="margin-left:10px; background-color: #272d2a; color:white; border-radius: 5px; height: 40px; cursor: pointer; padding: 5px 10px; text-decoration: none;">
+                                    수정
+                                </a>
+                                <a href="{% url 'webapp:delete_product' donation.pid.pid %}"
+                                   onclick="return confirm('삭제하시겠습니까?');"
+                                   style="margin-left:10px; background-color: red; color:white; border-radius: 5px; height: 40px; cursor: pointer; padding: 5px 10px; text-decoration: none;">
+                                    삭제
+                                </a>
+                            {% elif donation.pid.status == 3 %}
+                                판매완료
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endif %}
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td colspan="3">기부 신청 내역이 없습니다.</td>
+                </tr>
+            {% endif %}
+        </table>
+
+        </table>
+
+        <!-- 버튼들 -->
+        <div class="btn-container">
+            <a href="{% url 'webapp:donate_apply' %}">기부 신청하기</a>
+            <a href="{% url 'webapp:certificate' %}">증명서 발급 신청</a>
+        </div>
+    </div>
+    {% include 'footer.html' %}
+</body>
+</html>

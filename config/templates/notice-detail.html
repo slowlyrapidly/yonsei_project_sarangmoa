@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>공지사항 세부</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #ffffff;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+        .notice-detail {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        .notice-detail h1 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+        .notice-detail .meta {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 20px;
+        }
+        .notice-detail .content {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #333;
+            height: 300px;
+        }
+        .back-btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 15px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        .back-btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    {% include 'header.html' %}
+
+    <div class="notice-detail">
+        <h1>{{ notice.title }}</h1>
+        <div class="meta">
+            작성일: {{ notice.created_at|date:"Y-m-d" }} | 조회수: {{ notice.count }}
+        </div>
+        <div class="content">
+            {{ notice.content|linebreaks }}
+        </div>
+        <a href="{% url 'webapp:notice' %}" class="back-btn">목록으로 돌아가기</a>
+    </div>
+
+    {% include 'footer.html' %}
+</body>
+</html>

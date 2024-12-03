@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token }}"> <!-- CSRF 토큰 -->
+    <title>구매 페이지</title>
+
+    <style>
+        /* 기본 스타일 */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            background-color: #f9f9f9;
+        }
+
+        /* 헤더 */
+        ._header {
+            background-color: #172d;
+            padding: 20px;
+            text-align: center;
+            font-size: 1.5rem;
+            color: #fff;
+            font-weight: bold;
+        }
+
+        /* 메인 콘텐츠 */
+        .main-container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        /* 상품 섹션 */
+        .item-section {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .item-image {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 10px;
+            background-color: #f9f9f9;
+        }
+
+        .item-image img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        .item-detail {
+            flex: 1.5;
+            display: flex;
+            flex-direction: column;
+            gap: 60px;
+            padding: 20px;
+        }
+
+        .item-detail h2 {
+            font-size: 1.8rem;
+            margin: 0;
+            color: #333;
+        }
+
+        .item-detail p {
+            font-size: 1rem;
+            color: #555;
+            line-height: 1.5;
+        }
+
+        .total-price {
+            font-size: 1.2rem;
+            color: #000;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+
+        .purchase-button {
+            background-color: #272d2a;
+            color: #fff;
+            padding: 15px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            margin-top: 20px;
+            text-align: center;
+            width: 100%;
+            transition: background-color 0.3s;
+        }
+
+        .purchase-button:hover {
+            background-color: lightskyblue;
+            color: black;
+        }
+    </style>
+</head>
+<body>
+    {% include 'header.html' %}
+    <div class="_header">구매 페이지</div>
+    <div class="main-container">
+        <!-- 상품 섹션 -->
+        <div class="item-section">
+            <div class="item-image">
+                <img src="{{ p_image.url }}" alt="{{ p_name }}">
+            </div>
+            <div class="item-detail">
+                <h2>{{ p_name }}</h2>
+                <h3 id="category_p">카테고리 > &nbsp; {{ p_category }}</h3>
+                <h3>등록일: {{ p_date }}</h3>
+                <div class="total-price">가격: {{ p_cost }}</div>
+                <h3>적립마일리지: 100M</h3>
+                <button id="purchase-button" class="purchase-button" onclick="go_payment('{{ user_id }}', '{{ product_id }}', '{{ seller_id }}', '{{ user_auth }}')">구매하기</button>
+            </div>
+        </div>
+
+        <!-- 상품 설명 섹션 -->
+        <div class="item-description">
+            <h3>상품 상세 설명</h3>
+            <p>{{ p_description }}</p>
+        </div>
+    </div>
+    {% include 'footer.html' %}
+</body>
+<script>
+
+    function get_category(p_category){
+        const c_arr=['생활용품','문구류','의류','도서','기타'];
+        return c_arr[p_category]
+    }
+    function go_payment(uid, pid, seller_id, user_auth) {
+        if (user_auth >= 1) {
+            location.href = `/webapp/payment?uid=${uid}&pid=${pid}&seller_id=${seller_id}`;
+        } else if (user_auth == 0) {
+            alert('심사중인 회원입니다.');
+        } else {
+            alert('로그인이 필요합니다.');
+        }
+    }
+
+</script>
+</html>

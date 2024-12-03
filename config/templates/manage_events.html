@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Manage Events</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f9;
+        }
+        h1 {
+            color: #333;
+        }
+        form {
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        label {
+            font-weight: bold;
+            display: block;
+            margin-top: 10px;
+        }
+        input[type="text"], input[type="number"], textarea, input[type="file"] {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            background: #007bff;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            background: #ffffff;
+            margin: 5px 0;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        .preview-image {
+            max-width: 200px;
+            margin-top: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+    </style>
+    <script>
+        function previewImage(event, targetId) {
+            const reader = new FileReader();
+            reader.onload = function() {
+                const output = document.getElementById(targetId);
+                output.src = reader.result;
+                output.style.display = 'block';
+            }
+            reader.readAsDataURL(event.target.files[0]);
+        }
+    </script>
+</head>
+<body>
+    {% include 'header.html' %}
+    <h1>이벤트 관리페이지</h1>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label>이벤트 제목:</label>
+        <input type="text" name="title" required>
+
+        <label>이벤트 내용:</label>
+        <textarea name="content" rows="5" required></textarea>
+
+        <label>마일리지 비용:</label>
+        <input type="number" name="mileage_price" value="0" required>
+
+        <label>이미지:</label>
+        <input type="file" name="event_image" accept="image/*" onchange="previewImage(event, 'eventImagePreview')">
+        <img id="eventImagePreview" class="preview-image" style="display: none;">
+
+        <button type="submit">업로드</button>
+    </form>
+
+    <h2>이벤트 내역</h2>
+    <ul>
+        {% for event in events %}
+        <li>
+            <h2>{{ event.title }} &nbsp;-&nbsp;
+                <a href="{% url 'webapp:update_event' event.id %}" style="color: blue;">수정</a>
+                <a href="{% url 'webapp:delete_event' event.id %}" onclick="return confirm('삭제하시겠습니까?');" style="color: red;">삭제</a>
+            </h2>
+            <br> {{ event.content }} <br>
+            {% if event.event_image %}
+            <img src="{{ event.event_image.url }}" alt="Event Image" class="preview-image">
+            {% endif %}
+        </li>
+        {% endfor %}
+    </ul>
+    {% include 'footer.html' %}
+
+</body>
+</html>

@@ -1,0 +1,202 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>좋은 사례 - 기부 소식</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7fc;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 90%;
+            margin: 40px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #37474f;
+            margin-bottom: 30px;
+        }
+        .case-grid {
+            text-align: center;
+        }
+        .case-card {
+            display: inline-block;
+            vertical-align: top;
+            width: 600px;
+            height: 400px;
+            margin: 1%;
+            padding: 20px;
+            background-color: #f9fafc;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.05);
+            box-sizing: border-box;
+        }
+        .case-title {
+            font-size: 1.4rem;
+            color: #455a64;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .case-image {
+            width: 90%;
+            max-height: 150px;
+            object-fit: cover;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        .case-content {
+            font-size: 1rem;
+            line-height: 1.8;
+            color: #555;
+        }
+        .highlight {
+            font-weight: bold;
+            color: #37474f;
+        }
+        .case-feedback {
+            margin-top: 10px;
+            font-style: italic;
+            color: #607d8b;
+        }
+        .case-footer {
+            margin-top: 15px;
+            font-size: 0.9rem;
+            color: #777;
+            text-align: right;
+        }
+        /* 페이지 버튼 스타일 */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 20px 0;
+        }
+        .pagination-button {
+            background-color: #8fb398;
+            color: white;
+            font-size: 1rem;
+            font-weight: bold;
+            padding: 10px 20px;
+            margin: 0 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .pagination-button:hover {
+            background-color: #7aa583;
+        }
+        .page-number {
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+        @media (max-width: 768px) {
+            .case-card {
+                width: 100%;
+                margin: 10px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    {% include 'header.html' %}
+    <div class="container">
+        <h1>좋은 사례 - 기부 소식</h1>
+        <div class="case-grid">
+            <!-- 카드 1 -->
+            <div class="case-card">
+                <div class="case-title">따뜻한 겨울을 선물하다 - 취약계층 100가정에 난방 기구 제공</div>
+                <img class="case-image" src="{% static 'images/난방기구 지원.png' %}" alt="난방 기구 제공 이미지">
+                <div class="case-content">
+                    <p>한파가 몰아치는 겨울, 연세사랑모아는 취약계층 100가정에 난방 기구를 제공하여 따뜻한 겨울을 보낼 수 있도록 지원했습니다.</p>
+                </div>
+                <div class="case-footer">지원 일자: 2023년 1월</div>
+            </div>
+            <!-- 카드 2 -->
+            <div class="case-card">
+                <div class="case-title">미래를 위한 지원 - 취약계층 아동 50명에게 학습 지원 물품 제공</div>
+                <img class="case-image" src="{% static 'images/아동 학습 지원.png' %}" alt="학습 지원 물품 제공 이미지">
+                <div class="case-content">
+                    <p>교육의 기회를 놓치기 쉬운 취약계층 아동들에게 학습 도구와 교재를 제공하여 공부할 수 있는 환경을 지원하였습니다.</p>
+                </div>
+                <div class="case-footer">지원 일자: 2023년 3월</div>
+            </div>
+            <!-- 카드 3 -->
+            <div class="case-card">
+                <div class="case-title">필요한 순간, 필요한 도움 - 저소득층 200명에 식료품 지원</div>
+                <img class="case-image" src="{% static 'images/식료품 지원.png' %}" alt="식료품 지원 이미지">
+                <div class="case-content">
+                    <p>연세사랑모아는 생활에 필요한 기본 식료품을 저소득층 200명에게 제공하여 어려운 상황에서도 기본적인 생활을 유지할 수 있도록 도움을 드렸습니다.</p>
+                </div>
+                <div class="case-footer">지원 일자: 2023년 5월</div>
+            </div>
+            <!-- 카드 4 -->
+            <div class="case-card">
+                <div class="case-title">사랑의 책 나눔 - 아동용 도서 500권 배포</div>
+                <img class="case-image" src="{% static 'images/도서 배포.png' %}" alt="도서 배포 이미지">
+                <div class="case-content">
+                    <p>책을 접하기 어려운 아이들에게 500권의 도서를 기부하여 독서와 학습을 지원하였습니다.</p>
+                </div>
+                <div class="case-footer">지원 일자: 2023년 7월</div>
+            </div>
+            
+            
+            <!-- 카드 5 -->
+            <div class="case-card">
+                <div class="case-title">의료 지원 캠페인 - 저소득층 100명 무료 건강 검진</div>
+                <img class="case-image" src="{% static 'images/건강검진 지원.png' %}" alt="무료 건강 검진 이미지">
+                <div class="case-content">
+                    <p>연세사랑모아는 저소득층 주민 100명에게 무료 건강 검진을 제공하여 기본적인 건강 상태를 점검할 수 있도록 지원하였습니다.</p>
+                </div>
+                <div class="case-footer">지원 일자: 2023년 9월</div>
+            </div>
+            
+            
+            <!-- 카드 6 -->
+            <div class="case-card">
+                <div class="case-title">소외된 이웃과의 연말 나눔 - 겨울 의류 300벌 지원</div>
+                <img class="case-image" src="{% static 'images/의류 지원.png' %}" alt="겨울 의류 지원 이미지">
+                <div class="case-content">
+                    <p>연말을 맞아 연세사랑모아는 겨울 의류 300벌을 소외된 이웃들에게 제공하여 따뜻한 겨울을 보낼 수 있도록 도왔습니다.</p>
+                </div>
+                <div class="case-footer">지원 일자: 2023년 12월</div>
+            </div>
+            
+            
+            <!-- 카드 7 -->
+            <div class="case-card">
+                <div class="case-title">청소년 꿈 지원 - 50명에게 장학금 제공</div>
+                <img class="case-image" src="{% static 'images/장학금 지원.png' %}" alt="장학금 제공 이미지">
+                <div class="case-content">
+                    <p>학업과 진로를 고민하는 청소년 50명에게 장학금을 제공하여 꿈을 향해 도전할 수 있도록 지원하였습니다.</p>
+                </div>
+                <div class="case-footer">지원 일자: 2024년 2월</div>
+            </div>
+            
+            
+            <!-- 카드 8 -->
+            <div class="case-card">
+                <div class="case-title">어르신 행복 나눔 - 100가정에 식사 제공</div>
+                <img class="case-image" src="{% static 'images/식사 제공.png' %}" alt="식사 제공 이미지">
+                <div class="case-content">
+                    <p>생활이 어려운 독거 어르신 100가정에 식사를 제공하여, 균형 잡힌 영양을 공급할 수 있도록 지원했습니다.</p>
+                </div>
+                <div class="case-footer">지원 일자: 2024년 4월</div>
+            </div>
+                    </div>
+                </div>
+        </div>
+    </div>
+    {% include 'footer.html' %}
+</body>

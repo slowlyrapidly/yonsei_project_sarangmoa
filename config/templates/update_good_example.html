@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>좋은 예시 수정</title>
+    <style>
+        /* 기본 스타일 */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* 메인 컨테이너 */
+        .container {
+            width: 90%;
+            margin: auto;
+            padding-top: 2rem;
+        }
+
+        /* 메인 콘텐츠 */
+        .main-content {
+            padding: 1rem;
+            border: 1px solid black;
+            margin-left: 0;
+        }
+
+        .main-content h2 {
+            text-align: center;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 1rem;
+        }
+
+        .input-group label {
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
+        .input-group input,
+        .input-group textarea {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .image-preview img {
+            max-width: 100%;
+            max-height: 300px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        button {
+            padding: 10px 15px;
+            background-color: #357abd;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #285a8e;
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-top: 15px;
+            text-align: center;
+            text-decoration: none;
+            color: #357abd;
+        }
+    </style>
+</head>
+<body>
+    {% include 'header.html' %}
+    <div class="container">
+        <div class="main-content">
+            <h2>좋은 사례 수정</h2>
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="input-group">
+                    <label for="title">제목</label>
+                    <input type="text" id="title" name="title" value="{{ good_example.title }}" required>
+                </div>
+
+                <div class="input-group">
+                    <label for="content">내용</label>
+                    <textarea id="content" name="content" rows="5" required>{{ good_example.content }}</textarea>
+                </div>
+
+                <div class="input-group">
+                    <label for="event_image">이미지 수정</label>
+                    <input type="file" id="event_image" name="event_image" accept="image/*">
+                </div>
+
+                <div class="image-preview">
+                    {% if good_example.event_image %}
+                        <img src="{{ good_example.event_image.url }}" alt="현재 이미지">
+                    {% else %}
+                        <p>이미지 없음</p>
+                    {% endif %}
+                </div>
+
+                <button type="submit">저장하기</button>
+                <a href="{% url 'webapp:manage_good_examples' %}" class="back-btn">취소</a>
+
+            </form>
+        </div>
+    </div>
+    {% include 'footer.html' %}
+</body>
+</html>

@@ -1,0 +1,398 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>관리자 페이지</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .container {
+            width: 90%;
+            margin: auto;
+            padding: 20px;
+        }
+
+        .admin_title {
+            text-align: center;
+            margin-bottom: 20px;
+            border-bottom: 2px solid black;
+        }
+
+        .scrollable {
+            max-height: 400px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        table th, table td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+        }
+
+        table th {
+            background-color: #f4f4f4;
+            position: sticky;
+            top: 0;
+            z-index: 1;
+        }
+
+        .button {
+            padding: 5px 10px;
+            margin: 5px;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .approve-button {
+            background-color: #333333;
+        }
+
+        .reject-button {
+            background-color: #971F1F;
+        }
+
+        .button:hover {
+            opacity: 0.8;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                width: 100%;
+                padding: 10px;
+            }
+
+            table th, table td {
+                padding: 5px;
+                font-size: 0.9rem;
+            }
+
+            .button {
+                padding: 3px 7px;
+                font-size: 0.8rem;
+            }
+            .notice_and_event{
+                display: flex;
+                flex-direction: column;
+                gap:10px;
+                justify-content: space-around;
+                width: 100%;
+                margin: 20px auto;
+                align-items: center;
+
+            }
+        }
+
+        .notice_and_event{
+            display: flex;
+            justify-content: space-around;
+            width: 100%;
+            margin: 20px auto;
+        }
+        .notice_and_event div{
+            height: 50px;
+            width: 30%;
+            border-radius: 10px;
+            border: 1px solid grey;
+            background-color: #333333;
+            color: white;
+            margin-top: 20px;
+            cursor: pointer;
+
+        }
+
+        .notice_and_event div h2{
+            margin: 10px auto;
+            text-align: center;
+        }
+        .manage_notices:hover{
+            opacity: 0.8;
+        }
+        .manage_events:hover{
+            opacity: 0.8;
+        }
+        .manage_good_examples:hover{
+            opacity: 0.8;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    {% include 'header.html' %}
+    <div class="container">
+        <h1 class="admin_title">관리자 페이지</h1>
+
+        <section class="notice_and_event">
+            <div class="manage_notices" onclick="go_manage_notices()">
+                <h2>공지사항 관리</h2>
+            </div>
+            <div class="manage_events" onclick="go_manage_events()">
+                <h2>이벤트 관리</h2>
+            </div>
+            <div class="manage_good_examples" onclick="go_manage_good_examples()">
+                <h2>좋은사례 관리</h2>
+            </div>
+        </section>
+
+        <h3>사용자 목록</h3>
+        <div class="scrollable">
+            <table>
+                <thead>
+                    <tr>
+                        <th>사용자 ID</th>
+                        <th>이름</th>
+                        <th>봉사점수</th>
+                        <th>마일리지</th>
+                        <th>인증서 이미지 확인</th>
+                        <th>승인여부</th>
+                        <th>유저 승인/반려</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in users %}
+                    <tr>
+                        <td>{{ user.id }}</td>
+                        <td>{{ user.name }}</td>
+                        <td>{{ user.voluntary_point }}</td>
+                        <td>{{ user.mileage }}</td>
+                        <td>
+                            <button class="button" style="background-color: #0056b3" onclick="viewCertImg('{{ user.cert_reg_img.url }}')">이미지 보기</button>
+                        </td>
+                        <td>{{ user.authorization }}</td>
+                        <td>
+                            <button class="button approve-button" onclick="approveUser('{{ user.id }}')">유저 승인</button>
+                            <button class="button reject-button" onclick="rejectUser('{{ user.id }}')">유저 반려</button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <h3>기부 신청 목록</h3>
+        <div class="scrollable">
+            <table>
+                <thead>
+                    <tr>
+                        <th>상품 ID</th>
+                        <th>상품 이미지</th>
+                        <th>상품명</th>
+                        <th>카테고리</th>
+                        <th>상태</th>
+                        <th>관리</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for product in products %}
+                    {% if product.status == 0 %}
+                    <tr>
+                        <td>{{ product.pid }}</td>
+                        <td><img src="{{ product.p_image.url }}" alt="상품 이미지" width="100px" height="100px"></td>
+                        <td>{{ product.p_name }}</td>
+                        <td>{{ product.category }}</td>
+                        <td>기부 신청</td>
+                        <td>
+                            <button class="button approve-button" onclick="approveProduct('{{ product.pid }}')">승인</button>
+                            <button class="button reject-button" onclick="rejectProduct('{{ product.pid }}')">반려</button>
+                        </td>
+                    </tr>
+                    {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <h3>승인 완료 목록</h3>
+        <div class="scrollable">
+            <table>
+                <thead>
+                    <tr>
+                        <th>상품 ID</th>
+                        <th>상품 이미지</th>
+                        <th>상품명</th>
+                        <th>카테고리</th>
+                        <th>상태</th>
+                        <th>관리</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for product in products %}
+                    {% if product.status == 2 %}
+                    <tr>
+                        <td>{{ product.pid }}</td>
+                        <td><img src="{{ product.p_image.url }}" alt="상품 이미지" width="100"></td>
+                        <td>{{ product.p_name }}</td>
+                        <td>{{ product.category }}</td>
+                        <td>승인 완료</td>
+                        <td>
+                            <button class="button reject-button" onclick="cancelApproval('{{ product.pid }}')">승인 취소</button>
+                        </td>
+                    </tr>
+                    {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <h3>물품 반려 목록</h3>
+        <div class="scrollable">
+            <table>
+                <thead>
+                    <tr>
+                        <th>상품 ID</th>
+                        <th>상품 이미지</th>
+                        <th>상품명</th>
+                        <th>카테고리</th>
+                        <th>상태</th>
+                        <th>관리</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for product in products %}
+                    {% if product.status == 1 %}
+                    <tr>
+                        <td>{{ product.pid }}</td>
+                        <td><img src="{{ product.p_image.url }}" alt="상품 이미지" width="100"></td>
+                        <td>{{ product.p_name }}</td>
+                        <td>{{ product.category }}</td>
+                        <td>반려</td>
+                        <td>
+                            <button class="button approve-button" onclick="cancelRejection('{{ product.pid }}')">반려 취소</button>
+                        </td>
+                    </tr>
+                    {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {% include 'footer.html' %}
+
+    <script>
+
+        function go_manage_notices(){
+            location.href="{% url 'webapp:manage_notices'%}";
+        }
+        function go_manage_events(){
+            location.href="{% url 'webapp:manage_events'%}";
+
+        }
+        function go_manage_good_examples(){
+             location.href="{% url 'webapp:manage_good_examples' %}"
+        }
+
+        function viewCertImg(imgUrl) {
+            window.open(imgUrl, '_blank');
+        }
+
+        function approveUser(userId) {
+            $.ajax({
+                url: '/approve_user/',
+                type: 'POST',
+                data: {
+                    'user_id': userId,
+                    'csrfmiddlewaretoken': '{{ csrf_token }}'
+                },
+                success: function(response) {
+                    alert('유저를 승인했습니다.');
+                    location.reload();
+                }
+            });
+        }
+
+        function rejectUser(userId) {
+            $.ajax({
+                url: '/reject_user/',
+                type: 'POST',
+                data: {
+                    'user_id': userId,
+                    'csrfmiddlewaretoken': '{{ csrf_token }}'
+                },
+                success: function(response) {
+                    alert('유저를 반려했습니다.');
+                    location.reload();
+                }
+            });
+        }
+
+        function approveProduct(productId) {
+            $.ajax({
+                url: '/approve_product/',
+                type: 'POST',
+                data: {
+                    'product_id': productId,
+                    'csrfmiddlewaretoken': '{{ csrf_token }}'
+                },
+                success: function(response) {
+                    alert('상품을 승인했습니다.');
+                    location.reload();
+                }
+            });
+        }
+
+        function rejectProduct(productId) {
+            $.ajax({
+                url: '/reject_product/',
+                type: 'POST',
+                data: {
+                    'product_id': productId,
+                    'csrfmiddlewaretoken': '{{ csrf_token }}'
+                },
+                success: function(response) {
+                    alert('상품을 반려했습니다.');
+                    location.reload();
+                }
+            });
+        }
+
+        function cancelApproval(productId) {
+            $.ajax({
+                url: '/cancel_approval/',
+                type: 'POST',
+                data: {
+                    'product_id': productId,
+                    'csrfmiddlewaretoken': '{{ csrf_token }}'
+                },
+                success: function(response) {
+                    alert('승인 완료를 취소했습니다.');
+                    location.reload();
+                }
+            });
+        }
+
+        function cancelRejection(productId) {
+            $.ajax({
+                url: '/cancel_rejection/',
+                type: 'POST',
+                data: {
+                    'product_id': productId,
+                    'csrfmiddlewaretoken': '{{ csrf_token }}'
+                },
+                success: function(response) {
+                    alert('반려를 취소했습니다.');
+                    location.reload();
+                }
+            });
+        }
+    </script>
+</body>
+</html>

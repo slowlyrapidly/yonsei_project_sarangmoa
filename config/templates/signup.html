@@ -1,0 +1,166 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>회원가입</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+
+
+        }
+
+        body {
+            background-image: url("{% static 'images/login-background.png' %}");
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+        }
+
+        .signup-container {
+            width: 100%;
+            max-width: 500px;
+            margin: 150px auto 50px; /* 헤더 여백 확보 */
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+            color: #333;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin: 5px;
+        }
+
+        label {
+            font-weight: bold;
+            color: #333;
+        }
+
+        input, select, button {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 1rem;
+        }
+
+        input:focus, select:focus {
+            border-color: #36a2eb;
+            box-shadow: 0 0 5px rgba(54, 162, 235, 0.3);
+            outline: none;
+        }
+
+        button {
+            background-color: #272d2b;
+            color: white;
+            border: none;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #272d2a;
+        }
+
+        .preview-container img {
+            max-width: 100%;
+            max-height: 200px;
+            margin-top: 10px;
+        }
+
+        .footer-padding {
+            margin-top: 50px; /* 푸터와의 간격 */
+        }
+        .signup-btn{
+            width:100%;
+            margin: 10px auto;
+        }
+    </style>
+    <script>
+        function previewImage(input) {
+            const previewContainer = document.getElementById('preview-container');
+            const file = input.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    previewContainer.innerHTML = `<img src="${e.target.result}" alt="미리보기 이미지">`;
+                };
+                reader.readAsDataURL(file);
+            } else {
+                previewContainer.innerHTML = '';
+            }
+        }
+
+        // 성공 메시지 표시
+        document.addEventListener("DOMContentLoaded", function () {
+            const success = "{{ success }}";
+            if (success === "1") {
+                alert("회원가입이 성공적으로 완료되었습니다!");
+            }
+        });
+    </script>
+</head>
+<body>
+    {% include 'header.html' %}
+
+    <div class="signup-container">
+        <h1>Yonsei</h1>
+        <h1>Sarang Moa</h1>
+        <form method="POST" enctype="multipart/form-data" action="{% url 'webapp:signup' %}">
+            {% csrf_token %}
+            <label for="id">아이디</label>
+            {{ form.id }}
+
+            <label for="pw">비밀번호</label>
+            {{ form.pw }}
+
+            <label for="password_confirm">비밀번호 확인</label>
+            {{ form.password_confirm }}
+
+
+
+            <label for="name">이름</label>
+            {{ form.name }}
+
+            <label for="birth">생년월일</label>
+            {{ form.birth }}
+
+            <label for="gender">성별</label>
+            {{ form.gender }}
+
+            <label for="address">주소</label>
+            {{ form.address }}
+
+            <label for="cert_reg_img">재학증명서 (이미지)</label>
+            <input type="file" name="cert_reg_img" id="cert_reg_img" onchange="previewImage(this)">
+
+            <div id="preview-container" class="preview-container"></div>
+
+            <button type="submit" class="signup-btn">회원가입</button>
+        </form>
+    </div>
+
+    <div class="footer-padding">
+        {% include 'footer.html' %}
+    </div>
+</body>
+</html>

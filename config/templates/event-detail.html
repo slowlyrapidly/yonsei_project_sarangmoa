@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>이벤트 상세</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- jQuery CDN -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        .event-image {
+            width: 100%;
+            max-width: 800px;
+            height: auto;
+            border-radius: 8px;
+            margin: 0 auto 20px;
+            display: block;
+        }
+
+        .event-title {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #333;
+            text-align: center;
+        }
+
+        .event-content {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            color: #555;
+            margin-bottom: 20px;
+        }
+
+        .event-footer {
+            font-size: 0.9rem;
+            color: #777;
+            text-align: center;
+        }
+
+        .button-group {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .button-group a,
+        .button-group button {
+            display: inline-block;
+            margin: 10px auto;
+            padding: 12px 25px;
+            font-size: 1rem;
+            color: #fff;
+            text-align: center;
+            background-color: #4caf50;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .button-group a:hover,
+        .button-group button:hover {
+            background-color: #45a049;
+            transform: scale(1.05);
+        }
+
+        .apply-button {
+            display: block;
+            background-color: #148a57;
+        }
+
+        .apply-button:hover {
+            background-color: #117d4b;
+        }
+
+        .disabled-button {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+    <!-- 헤더 포함 -->
+    {% include 'header.html' %}
+
+    <div class="container">
+        <!-- 이벤트 이미지 -->
+        {% if event.event_image %}
+        <img src="{{ event.event_image.url }}" alt="{{ event.title }}" class="event-image">
+        {% endif %}
+
+        <!-- 이벤트 제목 -->
+        <div class="event-title">{{ event.title }}</div>
+
+        <!-- 이벤트 내용 -->
+        <div class="event-content">{{ event.content }}</div>
+
+        <!-- 이벤트 정보 -->
+        <div class="event-footer">
+            조회수: {{ event.count }} | 마일리지: {{ event.mileage_price }} 포인트
+        </div>
+
+        <!-- 버튼 그룹 -->
+        <div class="button-group">
+            <a href="{% url 'webapp:event' %}" class="back-button">목록으로 돌아가기</a>
+            {% if request.session.user_id %}
+                <button
+                    id="applyButton"
+                    class="apply-button"
+                    onclick="applyEvent({{ event.id }}, {{ event.mileage_price }});">
+                    신청하기
+                </button>
+            {% else %}
+                <button class="apply-button disabled-button" disabled>
+                    로그인 후 신청 가능합니다.
+                </button>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- 푸터 포함 -->
+    {% include 'footer.html' %}
+
+    <script>
+        function applyEvent(eventId, mileageRequired) {
+            $.ajax({
+                url: "/events/" + eventId + "/apply/",
+                type: "POST",
+                data: {
+                    mileage_required: mileageRequired,
+                    csrfmiddlewaretoken: "{{ csrf_token }}"
+                },
+                success: function(response) {
+                    if (response.status === "success") {
+                        alert("신청 되었습니다. 쿠폰은 휴대폰으로 발송됩니다.");
+                        location.reload();
+                    } else if (response.status === "error") {
+                        alert(response.message);
+                    }
+                },
+                error: function(xhr) {
+                    alert("신청이 완료되었습니다!!!!!");
+                }
+            });
+        }
+    </script>
+</body>
+</html>

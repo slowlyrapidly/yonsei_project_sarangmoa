@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>기부 신청 페이지</title>
+    <style>
+        /* 기본 스타일 */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* 메인 컨테이너 */
+        .container {
+            width: 90%;
+            margin: auto;
+            padding-top: 2rem;
+        }
+
+        /* 사이드바 */
+        .sidebar {
+            width: 200px;
+            height: 50px;
+            padding: 10px;
+            background-color: #3f3f3f;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        /* 메인 콘텐츠 */
+        .main-content {
+            padding: 1rem;
+            border: 1px solid black;
+            margin-left: 220px;
+        }
+
+        .main-content h2 {
+            text-align: center;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 1rem;
+        }
+
+        .input-group label {
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
+        .input-group input,
+        .input-group textarea,
+        .input-group select {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        /* 특정 textarea 크기 제한 */
+        #content-textarea {
+            width: 90%;
+            height: 150px;
+            resize: both;
+            min-width: 100px;
+            max-width: 100%;
+            min-height: 100px;
+            max-height: 400px;
+        }
+
+        /* 신청하기 버튼 스타일 */
+        .submit-button {
+            width: 100%;
+            height: 50px;
+            background-color: black;
+            color: white;
+            text-align: center;
+            line-height: 50px;
+            font-weight: bold;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 20px auto;
+            display: block;
+        }
+
+        .submit-button:hover {
+            background-color: #333;
+        }
+
+        /* 파일 미리 보기 */
+        .image-preview {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .image-preview img {
+            max-width: 100%;
+            max-height: 300px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        /* 반응형 스타일 */
+        @media (max-width: 1024px) {
+            .container {
+                width: 95%;
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+
+            .sidebar {
+                width: 100%;
+                text-align: center;
+                margin-bottom: 1rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .input-group input,
+            .input-group textarea,
+            .input-group select {
+                width: 100%;
+            }
+
+            .image-preview img {
+                max-height: 200px;
+            }
+
+            .submit-button {
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .main-content {
+                padding: 0.5rem;
+            }
+
+            .sidebar {
+                font-size: 0.9rem;
+                padding: 5px;
+            }
+
+            .submit-button {
+                font-size: 0.9rem;
+                height: 40px;
+                line-height: 40px;
+            }
+
+            .image-preview img {
+                max-height: 150px;
+            }
+        }
+    </style>
+</head>
+<body>
+    {% include 'header.html' %}
+    <div class="container">
+        <!-- 사이드바 -->
+        <div class="sidebar">기부 신청</div>
+
+        <!-- 메인 콘텐츠 -->
+        <div class="main-content">
+            <h2>기부 신청</h2>
+
+            <!-- 입력 폼 -->
+            <form id="donation-form" method="POST" enctype="multipart/form-data" action="{% url 'webapp:save_product' %}">
+                {% csrf_token %}
+                <div class="input-group">
+                    <label for="title">제목</label>
+                    <input type="text" id="title" name="title" placeholder="제목을 입력하세요">
+                </div>
+
+                <div class="input-group">
+                    <label for="category">카테고리</label>
+                    <select id="category" name="category">
+                        <option value="0">카테고리를 선택하세요</option>
+                        <option value="1">생활용품</option>
+                        <option value="2">문구류</option>
+                        <option value="3">의류</option>
+                        <option value="4">도서</option>
+                        <option value="5">기타</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label for="item-name">물품명</label>
+                    <input type="text" id="item-name" name="item_name" placeholder="물품명을 입력하세요">
+                </div>
+
+                <div class="input-group">
+                    <label for="content-textarea">내용</label>
+                    <textarea id="content-textarea" name="content" placeholder="내용을 입력하세요"></textarea>
+                </div>
+
+                <div class="input-group">
+                    <label for="file-input">사진 추가</label>
+                    <input type="file" id="file-input" name="image" accept="image/*">
+                </div>
+
+                <!-- 사진 미리 보기 -->
+                <div class="image-preview" id="image-preview">
+                    <p>사진 미리 보기</p>
+                </div>
+
+                <!-- 신청하기 버튼 -->
+                <button type="button" class="submit-button" onclick="validateAndSubmit()">신청하기</button>
+            </form>
+        </div>
+    </div>
+    {% include 'footer.html' %}
+    <script>
+        // 사진 추가 시 미리보기 기능
+        const fileInput = document.getElementById('file-input');
+        const imagePreview = document.getElementById('image-preview');
+
+        fileInput.addEventListener('change', () => {
+            const file = fileInput.files[0];
+
+            if (file) {
+                const reader = new FileReader();
+
+                reader.onload = (e) => {
+                    // 이미지 요소 생성
+                    imagePreview.innerHTML = `<img src="${e.target.result}" alt="사진 미리보기">`;
+                };
+
+                reader.readAsDataURL(file);
+            } else {
+                imagePreview.innerHTML = "<p>사진 미리 보기</p>";
+            }
+        });
+
+        // 입력 값 확인 및 제출
+        function validateAndSubmit() {
+            const title = document.getElementById('title').value.trim();
+            const category = document.getElementById('category').value.trim();
+            const itemName = document.getElementById('item-name').value.trim();
+            const content = document.getElementById('content-textarea').value.trim();
+            const fileInput = document.getElementById('file-input').files[0];
+
+            if (!title) {
+                alert('제목을 입력하세요.');
+                return;
+            }
+
+            if (!category) {
+                alert('카테고리를 선택하세요.');
+                return;
+            }
+
+            if (!itemName) {
+                alert('물품명을 입력하세요.');
+                return;
+            }
+
+            if (!content) {
+                alert('내용을 입력하세요.');
+                return;
+            }
+
+            if (!fileInput) {
+                alert('사진을 추가하세요.');
+                return;
+            }
+
+            // 모두 입력되었을 경우 폼 제출
+            document.getElementById('donation-form').submit();
+        }
+
+        // 서버로부터 전달된 오류 메시지 처리
+        const errorMessage = "{{ error|escapejs }}";
+        if (errorMessage) {
+            alert(errorMessage);
+        }
+
+    </script>
+</body>
+</html>

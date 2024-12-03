@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f7fc;
+            color: #333;
+        }
+        .container {
+            width: 90%;
+            margin: 40px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+        h1, h2 {
+            text-align: center;
+            color: #37474f;
+            margin-bottom: 10px;
+        }
+        h1 {
+            font-size: 2rem;
+            margin-top: 20px;
+        }
+        h2 {
+            font-size: 1.6rem;
+            margin-top: 40px;
+        }
+        .intro-text {
+            margin-top: 20px;
+            line-height: 1.8;
+            color: #555;
+            white-space: pre-line;
+        }
+        .section {
+            margin-top: 40px;
+        }
+        .section h2 {
+            border-bottom: 2px solid #90a4ae;
+            padding-bottom: 10px;
+            color: #455a64;
+        }
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+        }
+        .contact-info p {
+            font-size: 1rem;
+            color: #333;
+            margin: 5px 0;
+        }
+        .contact-info p a {
+            color: #42a5f5;
+            text-decoration: none;
+        }
+        .contact-info p a:hover {
+            text-decoration: underline;
+        }
+        .apply-button {
+            display: block;
+            width: 300px;
+            margin: 20px auto;
+            padding: 15px 0;
+            background: #8fb398; /* 항상 활성화된 색상 */
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 2rem;
+            font-weight: bold;
+            cursor: pointer;
+            text-align: center;
+            transition: background 0.3s ease, transform 0.2s ease;
+            margin-top: 20px;
+        }
+        .apply-button:hover {
+            background: #7aa583;
+            transform: translateY(-2px);
+        }
+
+    </style>
+
+    <script>
+
+        function goto_good_example() {
+            location.href="{% url 'webapp:good_example' %}";
+        }
+
+
+    </script>
+</head>
+<body>
+    {% include 'header.html' %}
+    <div class="container">
+        <h1>About us - 사업 소개</h1>
+        <div class="section">
+            <h2>회사 소개</h2>
+            <p class="intro-text">
+                안녕하세요! 저희는 <strong>"따뜻한 나눔과 새로운 시작을 창조하는 연세 사랑모아"</strong>입니다.
+                현대 사회에서 소비와 생산은 끊임없이 증가하지만, 그에 비례하여 사용되지 않는 물건과 자원이 낭비되고 있는 현실이 있습니다.
+                이러한 문제를 해결하기 위해, 저희는 <strong>자원을 효율적으로 순환하고, 이를 통해 경제적 어려움을 겪고 있는 이웃들을 돕는 모델을 구축</strong>하였습니다.
+                <strong>누군가에게는 쓰지 않는 물건이, 다른 누군가에게는 필요한 자원이 될 수 있다</strong>는 믿음으로,  <strong>환경보호와 사회적 가치를 창출</strong>하는 것을 목표로 합니다.
+            </p>
+        </div>
+        <div class="section">
+            <h2>비전 및 미션</h2>
+            <p class="intro-text">
+                <strong>비전</strong>: 저희는 모든 사람이 편견과 장벽 없이 자원을 공유하며 <strong>서로를 돕는 공정한 사회</strong>를 꿈꾸고 있습니다.
+                <strong>기부와 자원의 순환을 통해 기쁨과 나눔을 제공</strong>하는 것이 저희의 궁극적인 비전입니다.
+                <br><br>
+                <strong>미션</strong>: (회사명)의 미션은 <strong>모두가 공존하고 행복한 사회</strong>를 이루는 것입니다.
+                각자의 필요와 상황에 맞는 자원 배분을 통해 불우한 이웃들에게 실질적인 도움을 제공하고, 이를 통해 사회의 불평등을 줄여나가고자 합니다.
+            </p>
+        </div>
+        <div class="section">
+            <h2>주요 서비스 및 활동</h2>
+            <p class="intro-text">
+                주요 서비스는 다음과 같습니다:
+                <br>1. <strong>기부 물품 수집 및 관리</strong>
+                <br>저희는 개인과 기업으로부터 <strong>더 이상 사용되지 않는 다양한 물품</strong>을 기부받고 있으며, 각 물품은 철저한 검수를 거쳐 필요한 분들에게 전달하거나 저렴한 가격으로 판매됩니다.
+                그 수익은 모두 어려운 이웃들에게 돌아갑니다.
+                <br><br>
+                2. <strong>판매 수익 기부 및 지역사회 환원</strong>
+                <br>기부받은 물품들을 합리적인 가격에 판매하여 수익을 창출하고, 이를 통해 지역사회 내 불우한 이웃과 사회적 약자를 돕기 위한 기부금으로 사용합니다.
+                <br><br>
+                3. <strong>환경 보호 활동</strong>
+                <br>자원 재활용을 통해 환경 보호에도 기여하고 있습니다.
+                저희는 지속 가능한 환경을 위해 자원을 효율적으로 사용하고, 재활용의 중요성을 알리는 캠페인도 함께 운영하고 있습니다.
+                <br><br>
+                4. <strong>기부자와 수혜자 간의 연결</strong>
+                <br>저희는 기부자가 실제로 필요한 사람에게 물품이 전달되는 과정을 확인하고 따뜻한 메시지를 나눌 수 있도록 돕습니다.
+            </p>
+        </div>
+        <div class="section">
+            <h2>목표 고객과 시장</h2>
+            <p class="intro-text">
+                주요 고객층은 <strong>기부자, 소비자, 사회적 가치를 추구하는 기업</strong>입니다.
+                자원의 효율적 활용과 사회적 기여라는 <strong>가치 중심의 사업 모델</strong>을 통해, 자원 순환과 환경 보호에 기여하고자 합니다.
+            </p>
+        </div>
+        <div class="section">
+            <h2>핵심 가치</h2>
+            <p class="intro-text">
+                1. <strong>환경 보호</strong>: 사용하지 않는 물건들을 순환시켜 자원 낭비를 줄이고, 폐기물 감소에 기여합니다.
+                <br>2. <strong>공정한 기회 제공</strong>: 경제적 어려움을 겪는 이웃에게 부담 없이 물품을 제공하여 도움을 줍니다.
+                <br>3. <strong>사회적 책임과 기여</strong>: 기부와 판매 수익을 통해 지역 사회에 환원하여 따뜻한 나눔을 실천합니다.
+                <br>4. <strong>투명성과 신뢰성</strong>: 모든 기부와 기금의 흐름을 투명하게 운영하여 신뢰를 제공합니다.
+            </p>
+        </div>
+        <div class="section">
+            <h2>성과 및 주요 이정표</h2>
+            <p class="intro-text">
+                저희는 많은 분들의 기부와 참여로 성과를 이루었습니다.
+                <strong>10만 건 이상의 기부 물품 수집</strong>과 <strong>연간 5천 명 이상의 수혜자 지원</strong>을 통해 지역의 불우 이웃들과 사회적 약자를 돕고 있으며, 자원 순환의 중요성을 알리는 다양한 캠페인을 통해 환경 보호에 대한 인식을 높이고 있습니다.
+            </p>
+        </div>
+        <div class="section">
+            <h2>향후 계획</h2>
+            <p class="intro-text">
+                앞으로 저희는 더 많은 분들이 기부와 재활용의 가치에 동참할 수 있도록 온라인 및 오프라인 채널을 확장하고, 자원 순환의 중요성을 알리는 교육 프로그램을 도입할 계획입니다.
+                기부자가 자신의 물품이 필요한 사람에게 전달되는 과정을 확인할 수 있는 시스템을 도입하여 기부의 의미를 더욱 깊게 느낄 수 있도록 할 것입니다.
+            </p>
+        </div>
+        <div class="section contact-info">
+            <h2>문의하기</h2>
+            <p>더 나은 세상을 만들고자 하는 여러분의 참여를 환영합니다.
+               저희와 함께 따뜻한 나눔의 가치를 실천하고 싶으시다면 언제든지 문의해 주세요!</p>
+            <p>📍 주소: 강원도 원주시 흥업면 연세대학교 미래캠퍼스</p>
+            <p>📞 연락처: 010-0000-0000</p>
+            <p>📧 이메일: sarangmoa@yonsei.co.kr</p>
+            <p>🌐 웹사이트: <a href="{% url 'webapp:main' %}" target="_blank">바로가기</a></p>
+        </div>
+        <button class="apply-button" onclick="goto_good_example()" >좋은사례 모음</button>
+    </div>
+        {% include 'footer.html' %}
+
+    <script>
+        let userMileage = 1000;
+        const termsCheck = document.getElementById('terms-check');
+        const applyButton = document.getElementById('apply-button');
+        termsCheck.addEventListener('change', () => {
+            applyButton.disabled = !termsCheck.checked;
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yonsei Sarangmoa FAQ</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        ._parent{
+            display: flex;
+            width: 1200px;
+            margin:0 auto;
+        }
+        .announcements-section {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            margin: 40px;
+            z-index: 1;
+            flex-direction: column;
+            width: 15%;
+
+        }
+        .announcements-sidebar {
+            width: 250px;
+            height: 100%;
+            color: #000;
+            padding: 10px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            position:relative;
+            z-index: 10;
+
+        }
+        .notice-sidebar{
+            margin: 10px auto;
+            width: 60%;
+            height: 60px;
+            text-align: center;
+            background-color: white;
+            color: black;
+            font-size: 24px;
+            border: none;
+            border-bottom: 1px solid black;
+            cursor: pointer;
+        }
+        .faq-sidebar{
+            margin: 10px auto;
+            width: 60%;
+            height: 60px;
+            text-align: center;
+            background-color: white;
+            font-size: 24px;
+            border: none;
+            border-bottom: 1px solid black;
+            cursor: pointer;
+            background-color: black;
+            color: white;
+        }
+
+        .announcements-content {
+            flex-grow: 1;
+            margin-left: 40px;
+        }
+        .announcements-content h2 {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .search-bar {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            flex-shrink: 0;
+        }
+        .search-bar select {
+            padding: 5px;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+        }
+        .search-bar input[type="text"] {
+            padding: 5px;
+            font-size: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+        }
+        .search-bar button {
+            padding: 5px;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+            background-color: #f8f9fa;
+            cursor: pointer;
+        }
+        .faq-container {
+            width: 80%;
+            max-width: 800px;
+            margin: 50px auto;
+            background: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            text-align: center;
+        }
+        .faq-item {
+            margin-bottom: 20px;
+            position: relative;
+        }
+        .faq-question {
+            font-weight: bold;
+            cursor: pointer;
+            margin: 0;
+            padding: 10px;
+            background-color: azure;
+            border-radius: 4px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .faq-answer {
+            display: none;
+            padding: 10px;
+            border-left: 4px solid #0066cc;
+            background: white;
+            border-radius: 4px;
+        }
+        .toggle-button {
+            border: none;
+            background: none;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+        .footer-banner {
+            background-color: #f8f9fa;
+            border-top: 2px solid #ddd;
+            border-bottom: 2px solid #ddd;
+            margin-top: 20px;
+        }
+        .footer-nav {
+            display: flex;
+            justify-content: flex-start;
+            padding: 10px 20px;
+            border-top: 1px solid #ddd;
+            border-bottom: 1px solid #ddd;
+        }
+        .footer-nav a {
+            margin: 0 15px;
+            color: #555;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+        .footer-nav a:hover {
+            text-decoration: underline;
+        }
+        .footer-content {
+            display: flex;
+            justify-content: center;
+            gap: 170px;
+            padding: 20px 0;
+        }
+        .footer-section {
+            text-align: center;
+            max-width: 150px;
+            flex: 1;
+        }
+        .contact-info, .account-info, .event-faq {
+            flex: 1;
+        }
+        .notice-info {
+            flex: 2;
+            max-width: 300px;
+        }
+        .footer-section h3 {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        .contact-info p, .account-info p, .notice-info a {
+            font-size: 0.9rem;
+            color: #555;
+            margin: 5px 0;
+            text-align: left;
+            white-space: nowrap;
+        }
+        .event-faq .icon-group {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 30px;
+        }
+        .event-faq .icon {
+            text-align: center;
+        }
+        .event-faq .icon span {
+            font-size: 2.5rem;
+            color: #8fb398;
+            display: block;
+        }
+        .event-faq .icon p {
+            margin-top: 5px;
+            font-size: 0.9rem;
+            color: #4a6076;
+            font-weight: bold;
+        }
+        .notice-info a {
+            color: #555;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .notice-info .more-btn {
+            display: inline-block;
+            padding: 2px 8px;
+            font-size: 0.8rem;
+            color: #333;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+            margin-left: 10px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .notice-info .more-btn:hover {
+            background-color: #f1f1f1;
+        }
+    </style>
+</head>
+<body>
+    {% include 'header.html' %}
+
+
+    <!-- 공지사항 세션 -->
+    <div class="_parent">
+    <div class="announcements-section">
+        <div class="announcements-sidebar">
+        <button class="faq-sidebar" >FAQ</button>
+        <button class="notice-sidebar" onclick="go_notice()">공지사항</button>
+    </div>
+    </div>
+
+    <!-- FAQ 섹션 -->
+    <div class="faq-container">
+            <h2 style="margin-bottom: 20px; text-align: left">자주 묻는 질문</h2>
+
+        <div class="faq-item">
+            <div class="faq-question">
+                Q 기부서비스는 어떤 방식으로 진행되나요?
+                <button class="toggle-button">▼</button>
+            </div>
+            <div class="faq-answer">
+                A: Yonsei Sarangmoa에서는 다양한 기부 방법을 제공합니다. 매장 방문, 온라인 신청, 전화 신청 등의 방법을 통해 기부할 수 있습니다.
+            </div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-question">
+                Q 기부 가능한 물품의 종류는 무엇인가요?
+                <button class="toggle-button">▼</button>
+            </div>
+            <div class="faq-answer">
+                A: 의류, 패션잡화, 생활용품, 소형가구, 도서, 소형가전 등 혼자 들 수 있는 무게와 부피의 물품이 기부 가능합니다.
+            </div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-question">
+                Q 기부된 물품은 어떻게 활용되나요?
+                <button class="toggle-button">▼</button>
+            </div>
+            <div class="faq-answer">
+                A: 기부된 물품은 Yonsei Sarangmoa 매장에서 판매되며, 수익금은 학교 봉사 단체나 프로젝트를 지원하는 데 사용됩니다.
+            </div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-question">
+                Q 봉사자 모집은 어떻게 이루어지나요?
+                <button class="toggle-button">▼</button>
+            </div>
+            <div class="faq-answer">
+                A: Yonsei Sarangmoa에서는 주기적으로 봉사자를 모집합니다. 봉사 활동에 참여하면 학교 봉사 점수와 다양한 혜택을 받을 수 있습니다.
+            </div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-question">
+                Q 마일리지 제도는 무엇인가요?
+                <button class="toggle-button">▼</button>
+            </div>
+            <div class="faq-answer">
+                A: 기부자에게는 마일리지 보상이 제공되며, 해당 마일리지는 향후 이벤트 참여나 할인 혜택으로 사용할 수 있습니다.
+            </div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-question">
+                Q 고장난 물품도 기부가 가능한가요?
+                <button class="toggle-button">▼</button>
+            </div>
+            <div class="faq-answer">
+                A: 고장 난 기부물품을 수리하여 판매하기 위해선 물품에 맞는 부품과 전문 인력이 필요합니다. 하지만 현재 연세 사랑모아는 해당 전문 인력이 충분하지 않아 기부받지 못하고 있습니다.
+            </div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-question">
+                Q 반환과 교환 방법
+                <button class="toggle-button">▼</button>
+            </div>
+            <div class="faq-answer">
+                A: 해당 물품에 하자가 발생하여 교환이나 반품을 원할 시에는 문의하기를 이용합니다.
+            </div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-question">
+                Q 회원가입 오류
+                <button class="toggle-button">▼</button>
+            </div>
+            <div class="faq-answer">
+                A: 회원가입에 문제가 발생하였을시에는 1대1 상담을 통해 해결하고 있습니다.
+            </div>
+        </div>
+    </div>
+</div>
+    <script>
+
+        const questions = document.querySelectorAll('.faq-question');
+        questions.forEach(question => {
+            question.addEventListener('click', () => {
+                const answer = question.nextElementSibling;
+                answer.style.display = answer.style.display === 'block' ? 'none' : 'block';
+            });
+        });
+
+        const toggleButtons = document.querySelectorAll('.toggle-button');
+        toggleButtons.forEach(button => {
+            button.addEventListener('click', (event) => {
+                event.stopPropagation();
+                const answer = button.parentElement.nextElementSibling;
+                if (answer.style.display === 'block') {
+                    answer.style.display = 'none';
+                    button.textContent = '▼';
+                } else {
+                    answer.style.display = 'block';
+                    button.textContent = '▲';
+                }
+            });
+        });
+        function go_notice(){
+            location.href="{% url 'webapp:notice' %}";
+        }
+    </script>
+
+    <!-- 하단 배너 -->
+    <div class="footer-banner">
+        <!-- 하단 링크 -->
+        <div class="footer-nav">
+            <a href="#">회사소개</a>
+            <a href="#">이용약관</a>
+            <a href="#">개인정보처리방침</a>
+        </div>
+
+        <!-- 배너 내용 -->
+        <div class="footer-content">
+            <!-- 문의사항 섹션 -->
+            <div class="footer-section contact-info">
+                <h3>문의사항</h3>
+                <p>010-0000-0000</p>
+                <p>평일 AM 9:00 ~ PM 6:00</p>
+            </div>
+
+            <!-- 계좌정보 섹션 -->
+            <div class="footer-section account-info">
+                <h3>계좌정보</h3>
+                <p>하나은행</p>
+                <p>111-222222-33333</p>
+                <p>예금주 : 재단법인 연세 사랑모아</p>
+            </div>
+
+            <!-- 이벤트 FAQ 섹션 -->
+            <div class="footer-section event-faq">
+                <div class="icon-group">
+                    <div class="icon">
+                        <span>🎁</span>
+                        <p>이벤트</p>
+                    </div>
+                    <div class="icon">
+                        <span>📄</span>
+                        <p>FAQ</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 공지사항 섹션 -->
+            <div class="footer-section notice-info">
+                <h3>공지사항</h3>
+                <a href="#">
+                    2024 봉사자 모집 공고
+                    <span class="more-btn">더 보기 ></span>
+                </a>
+                <a href="#">
+                    연세 사랑모아 회원가입 이벤트
+                    <span class="more-btn">더 보기 ></span>
+                </a>
+                <a href="#">
+                    연세 사랑모아 마일리지 이벤트
+                    <span class="more-btn">더 보기 ></span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

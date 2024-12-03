@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>물품 수정</title>
+    <style>
+        /* 기본 스타일 */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* 메인 컨테이너 */
+        .container {
+            width: 90%;
+            margin: auto;
+            padding-top: 2rem;
+        }
+
+        /* 사이드바 */
+        .sidebar {
+            width: 200px;
+            height: 50px;
+            padding: 10px;
+            background-color: #3f3f3f;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        /* 메인 콘텐츠 */
+        .main-content {
+            padding: 1rem;
+            border: 1px solid black;
+            margin-left: 220px;
+        }
+
+        .main-content h2 {
+            text-align: center;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 1rem;
+        }
+
+        .input-group label {
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
+        .input-group input,
+        .input-group textarea,
+        .input-group select {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        /* 특정 textarea 크기 제한 */
+        #description-textarea {
+            width: 90%;
+            height: 150px;
+            resize: both;
+            min-width: 100px;
+            max-width: 100%;
+            min-height: 100px;
+            max-height: 400px;
+        }
+
+        /* 저장 버튼 스타일 */
+        .submit-button {
+            width: 100%;
+            height: 50px;
+            background-color: black;
+            color: white;
+            text-align: center;
+            line-height: 50px;
+            font-weight: bold;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 20px auto;
+            display: block;
+        }
+
+        .submit-button:hover {
+            background-color: #333;
+        }
+
+        /* 파일 미리 보기 */
+        .image-preview {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .image-preview img {
+            max-width: 100%;
+            max-height: 300px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        /* 반응형 스타일 */
+        @media (max-width: 1024px) {
+            .container {
+                width: 95%;
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+
+            .sidebar {
+                width: 100%;
+                text-align: center;
+                margin-bottom: 1rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .input-group input,
+            .input-group textarea,
+            .input-group select {
+                width: 100%;
+            }
+
+            .image-preview img {
+                max-height: 200px;
+            }
+
+            .submit-button {
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .main-content {
+                padding: 0.5rem;
+            }
+
+            .sidebar {
+                font-size: 0.9rem;
+                padding: 5px;
+            }
+
+            .submit-button {
+                font-size: 0.9rem;
+                height: 40px;
+                line-height: 40px;
+            }
+
+            .image-preview img {
+                max-height: 150px;
+            }
+        }
+    </style>
+</head>
+<body>
+    {% include 'header.html' %}
+    <div class="container">
+        <!-- 사이드바 -->
+        <div class="sidebar">물품 수정</div>
+
+        <!-- 메인 콘텐츠 -->
+        <div class="main-content">
+            <h2>물품 수정</h2>
+
+            <!-- 수정 폼 -->
+            <form id="update-product-form" method="POST" enctype="multipart/form-data" action="{% url 'webapp:update_product' product.pid %}">
+                {% csrf_token %}
+                <div class="input-group">
+                    <label for="p_name">물품명</label>
+                    <input type="text" id="p_name" name="p_name" value="{{ product.p_name }}" required>
+                </div>
+
+                <div class="input-group">
+                    <label for="cost">가격</label>
+                    <input type="number" id="cost" name="cost" value="{{ product.cost }}" required>
+                </div>
+
+                <div class="input-group">
+                    <label for="description-textarea">설명</label>
+                    <textarea id="description-textarea" name="description">{{ product.description }}</textarea>
+                </div>
+
+                <div class="input-group">
+                    <label for="file-input">사진 수정</label>
+                    <input type="file" id="file-input" name="p_image" accept="image/*">
+                </div>
+
+                <!-- 사진 미리 보기 -->
+                <div class="image-preview" id="image-preview">
+                    {% if product.p_image %}
+                        <img src="{{ product.p_image.url }}" alt="현재 이미지">
+                    {% else %}
+                        <p>사진 미리 보기</p>
+                    {% endif %}
+                </div>
+
+                <!-- 저장 버튼 -->
+                <button type="submit" class="submit-button">저장하기</button>
+            </form>
+        </div>
+    </div>
+    {% include 'footer.html' %}
+    <script>
+        // 사진 추가 시 미리보기 기능
+        const fileInput = document.getElementById('file-input');
+        const imagePreview = document.getElementById('image-preview');
+
+        fileInput.addEventListener('change', () => {
+            const file = fileInput.files[0];
+
+            if (file) {
+                const reader = new FileReader();
+
+                reader.onload = (e) => {
+                    // 이미지 요소 생성
+                    imagePreview.innerHTML = `<img src="${e.target.result}" alt="사진 미리보기">`;
+                };
+
+                reader.readAsDataURL(file);
+            } else {
+                imagePreview.innerHTML = "<p>사진 미리 보기</p>";
+            }
+        });
+    </script>
+</body>
+</html>

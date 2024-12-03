@@ -1,0 +1,153 @@
+/* 기본 스타일 */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+/* 상단 네비게이션 바 */
+.nav{
+    background-color: #f1c995ee;
+    text-align: right;
+    font-size: small;
+}
+.navbar {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    background-color: white;
+    margin-left: 100px;
+    gap: 100px; /* 항목 간 여백 */
+}
+
+
+.navbar a {
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+}
+.header {
+    padding: 20px;
+    text-align: center;
+}
+.search {
+    display: flex;
+    justify-content: flex-end;
+}
+.h3 {
+    float: left;
+}
+/* 사이드바 */
+.sidebar {
+    width: 200px;
+    height: 50px;
+    padding: 10px;
+    background-color: black;
+    color: white;
+    text-align: center;
+    font-weight: bold;
+}
+
+
+/* 하단 정보 */
+.footer {
+    margin-top: 2rem;
+    padding: 2rem;
+    background-color:#f1c995ee;
+    display: flex;
+    justify-content: space-around;
+}
+
+
+.footer div {
+    text-align: center;
+}
+
+
+/* 입력하기 */
+
+
+/* 메인 콘텐츠 */
+.main-content {
+    display: flex;
+    padding: 20px;
+}
+
+
+/* 카테고리 섹션 */
+.category {
+    width: 20%;
+    text-align: left;
+}
+
+
+.category h3 {
+    font-weight: bold;
+}
+
+
+.category ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+
+.category ul li {
+    margin: 10px 0;
+}
+.exp {
+    display: flex;
+    align-items: center;
+    margin-left: 50px;
+}
+
+
+/* 기부물품 목록 */
+.items {
+    width: 75%;
+    text-align: center;
+}
+
+
+.items h3 {
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+
+.items p {
+    margin: 10px 0;
+    color: #555;
+}
+
+
+.item-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3개의 열 */
+    grid-template-rows: repeat(2, auto);   /* 2개의 행 */
+    gap: 20px;                             /* 아이템 간의 간격 */
+    justify-items: center;                 /* 각 아이템을 중앙에 정렬 */
+}
+
+
+/* 각 기부물품 항목 */
+.item {
+    width: 150px;
+    text-align: center;
+}
+
+
+.placeholder {
+    width: 150px;
+    height: 150px;
+    background-color: #f0f0f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #aaa;
+    font-size: 14px;
+    border: 1px solid #ddd;
+    margin-bottom: 5px;
+}

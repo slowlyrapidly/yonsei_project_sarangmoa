@@ -1,0 +1,61 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Donation and Purchase</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #ffffff;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        .actions-section {
+            display: flex;
+            flex-direction: column; /* 세로 정렬 */
+            align-items: center;
+            gap: 20px; /* 이미지 간 간격 */
+            margin: 40px 0;
+            width: 100%;
+        }
+
+        .action-combined {
+            width: 100%;
+            display: flex;
+            flex-direction: column; /* 이미지들을 세로로 정렬 */
+            align-items: center;
+            gap: 20px;
+            background-color: azure;
+        }
+
+        .combined-image {
+            width: 100%; /* 화면 너비의 90%로 이미지 표시 */
+            max-width: 1200px; /* 최대 너비 제한 */
+            height: auto; /* 비율 유지 */
+            border-radius: 10px; /* 약간의 둥근 모서리 */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 이미지에 그림자 추가 */
+        }
+    </style>
+</head>
+<body>
+{% include 'header.html' %}
+    <section class="actions-section">
+        <div class="action-combined">
+            <a href="{% url 'webapp:donate_category'%}">
+                <img src="{% static 'images/yonsei-coupon2.png' %}" alt="구매 이미지" class="combined-image">
+            </a>
+
+            <a href="{% url 'webapp:donate_apply'%}">
+                <img src="{% static 'images/new-donation-image.png' %}" alt="기부 이미지" class="combined-image">
+            </a>
+
+
+        </div>
+    </section>
+{% include 'footer.html' %}
+</body>
+</html>

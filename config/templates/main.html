@@ -1,0 +1,406 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>main</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: azure;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        .main-banner {
+            height: 95vh;
+            width: 90vw;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            margin: 0 auto 20px auto;
+
+        }
+        .main-banner .text-content {
+            position: relative;
+            z-index: 1;
+        }
+        section{
+            width:80vw;
+            margin:50px auto 50px auto;
+        }
+        @media (max-width: 1279px) and (min-width: 1024px) {
+            .main-banner {
+                height: 80vh;
+            }
+        }
+        @media (max-width: 1023px) and (min-width: 769px) {
+            .main-banner {
+                height: 70vh;
+            }
+        }
+        @media (max-width: 767px) and (min-width: 480px) {
+            .main-banner {
+                height: 60vh;
+            }
+        }
+        @media (max-width: 479px) {
+            .main-banner {
+                height: 50vh;
+            }
+        }
+        .features {
+            display: flex;
+            justify-content: space-around;
+            gap: 20px;
+            text-align: center;
+            margin: 10px auto 50px auto;
+            flex-wrap: wrap;
+        }
+        .feature-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #ffffff;
+            width: 100%;
+            max-width: 300px;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        .feature-item img {
+            height: 250px;
+            margin-bottom: 10px;
+            padding: 10px;
+            width: 98%;
+        }
+        .products {
+            text-align: center;
+            margin: 0 auto 100px auto;
+        }
+        .products h2{
+            margin-bottom: 30px;
+        }
+        .products .product-list {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .products .product {
+            width: 100%;
+            max-width: 250px;
+            text-align: center;
+        }
+        .products .product img {
+            width: 100%;
+            height: auto;
+            background-color: #ddd;
+        }
+        .announcements, .events {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 100px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .announcements .section, .events .section {
+            width: 100%;
+            max-width: 500px;
+        }
+        .announcements h3, .events h3 {
+            color: #4a6076;
+        }
+        .about-us {
+            text-align: left;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .about-us h2 {
+            color: #4a6076;
+        }
+        .about-us img {
+            width: 100%;
+            max-width: 700px;
+            height: auto;
+        }
+        .about-text {
+            flex: 1;
+        }
+        .footer-icons {
+            display: flex;
+            justify-content: center;
+            gap: 50px;
+            padding: 50px 0;
+            flex-wrap: wrap;
+        }
+        .footer-icons .icon {
+            text-align: center;
+        }
+        .footer-icons img {
+            width: 100%;
+            max-width: 150px;
+            height: auto;
+        }
+        .footer-banner {
+            background-color: #f8f9fa;
+            border-top: 2px solid #ddd;
+            border-bottom: 2px solid #ddd;
+            margin-top: 20px;
+        }
+        .footer-nav {
+            display: flex;
+            justify-content: center;
+            padding: 10px 20px;
+            border-top: 1px solid #ddd;
+            border-bottom: 1px solid #ddd;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .footer-nav a {
+            margin: 5px;
+            color: #555;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+        .footer-nav a:hover {
+            text-decoration: underline;
+        }
+        .footer-content {
+            display: flex;
+            justify-content: center;
+            gap: 50px;
+            padding: 20px 0;
+            flex-wrap: wrap;
+        }
+        .footer-section {
+            text-align: center;
+            max-width: 150px;
+            flex: 1;
+        }
+        .contact-info, .account-info, .event-faq {
+            flex: 1;
+        }
+        .notice-info {
+            flex: 2;
+            max-width: 300px;
+        }
+        .footer-section h3 {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        .contact-info p, .account-info p, .notice-info a {
+            font-size: 0.9rem;
+            color: #555;
+            margin: 5px 0;
+            text-align: left;
+            white-space: nowrap;
+        }
+        .event-faq .icon-group {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+        .event-faq .icon {
+            text-align: center;
+        }
+        .event-faq .icon span {
+            font-size: 2.5rem;
+            color: #8fb398;
+            display: block;
+        }
+        .event-faq .icon p {
+            margin-top: 5px;
+            font-size: 0.9rem;
+            color: #4a6076;
+            font-weight: bold;
+        }
+        .notice-info a {
+            color: #555;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .notice-info .more-btn {
+            display: inline-block;
+            padding: 2px 8px;
+            font-size: 0.8rem;
+            color: #333;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+            margin-left: 10px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .notice-info .more-btn:hover {
+            background-color: #f1f1f1;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 1279px) and (min-width: 1024px) {
+            .footer-content {
+                gap: 30px;
+            }
+            .footer-section h3 {
+                font-size: 1.4rem;
+            }
+        }
+        @media (max-width: 1023px) and (min-width: 769px) {
+            .footer-content {
+                gap: 20px;
+            }
+            .footer-section h3 {
+                font-size: 1.3rem;
+            }
+        }
+        @media (max-width: 767px) and (min-width: 480px) {
+            .features, .products .product-list, .announcements, .events, .about-us, .footer-icons {
+                flex-direction: column;
+                align-items: center;
+            }
+            .footer-section h3 {
+                font-size: 1.2rem;
+            }
+        }
+        @media (max-width: 479px) {
+            .footer-nav {
+                flex-direction: column;
+                align-items: center;
+            }
+            .footer-nav a {
+                margin: 5px 0;
+            }
+            .footer-section h3 {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    {% include 'header.html' %}
+    <!-- 메인 바너 -->
+    <section class="main-banner">
+        <div class="text-content">
+            <a href="{% url 'webapp:donate_service' %}"> <img src="{% static 'images/main-banner.png' %}" alt="컵" width="100%" height="100%"> </a>
+        </div>
+    </section>
+
+    <!-- 주요 기능 -->
+            <h2 style="margin:50px auto 30px auto; text-align: center;">좋은 사례 모음</h2>
+
+    <section class="features">
+        {% for good in good_examples %}
+            <div class="feature-item">
+                {% if good.event_image %}
+                    <a href="{% url 'webapp:good_example' %}">
+                        <img src="{{ good.event_image.url }}" alt="{{ good.title }}">
+                    </a>
+                {% else %}
+                     <img src="{% static 'images/default.png' %}" alt="기본 이미지">
+                 {% endif %}
+
+                <h3>{{ good.title}}</h3>
+            </div>
+        {% endfor %}
+
+    </section>
+
+    <!-- 이달의 상품 -->
+    <section class="products">
+        <h2>이달의 상품</h2>
+        <div class="product-list">
+            {% for product in products %}
+                <div class="product">
+
+                {% if product.p_image %}
+                    <a href="{% url 'webapp:donate_detail' %}?product_id={{ product.pid }}">
+                        <img src="{{ product.p_image.url }}" alt="{{ product.p_name }}">
+                    </a>
+                {% else %}
+                    <img src="{% static 'images/default.png' %}" alt="기본 이미지">
+                {% endif %}
+
+                <p>{{ product.p_name }}<br>{{ product.cost }}원</p>
+                 </div>
+            
+        {% endfor %}
+        </div>
+    </section>
+
+    <!-- 공지사항 및 뉴스 -->
+    <section class="announcements">
+        <div class="section">
+            <h2>연세 사랑모아 공지사항</h2>
+            <p>[공지] 11월 21일(목)부터 연세 사랑모아 봉사자 모집예정입니다.</p>
+            <img src="{% static 'images/announce1.png' %}" alt="Announcement Image" style="width: 100%; height: auto;">
+        </div>
+        <div class="section">
+            <h2>News & Stories</h2>
+            <p>[공지] 연세 사랑모아 회원가입 혜택</p>
+            <img src="{% static 'images/announce2.png' %}/" alt="News Image" style="width: 100%; height: auto;">
+        </div>
+    </section>
+
+    <!-- 이벤트 -->
+    <div>        
+        <h2 style="text-align: center; font-size: 2.5rem; color: #4a6076; margin-bottom: 20px;">이벤트</h2>
+    </div>
+    <section class="events">
+        {% for event in events %}
+            <div class="section">
+                <h3>{{ event.title }}</h3>
+                <p>{{event.content}}</p>
+
+                <img src="{{ event.event_image.url }}" alt="event image" style="width: 100%; height: auto;">
+            </div>
+        {% endfor %}
+
+    </section>
+
+     <!-- About us -->
+     <div>        
+        <h2 style="text-align: center; font-size: 2.5rem; color: #4a6076; margin-bottom: 20px;">About us</h2>
+    </div>
+    
+    <section class="about-us">
+        <img src="{% static 'images/yonsei-volunteer.png' %}" alt="목표와 성공">
+        <div class="about-text">
+            <h3>
+                연세 사랑모아를 이용해 발생한 수익금은 연세대 사회보증 단체 및 연세대의 창업 프로젝트를 위해 사용됩니다.
+            </h3>
+        </div>
+    </section>
+
+    <!-- 하단 아이콘 -->
+    <div class="footer-icons">
+        <div class="icon">
+            <img src="{% static 'images/certificate.png' %}" alt="증명서발급">
+        </div>
+        <div class="icon">
+            <img src="{% static 'images/donate.png' %}" alt="물품기부">
+            
+        </div>
+        <div class="icon">
+            <img src="{% static 'images/volunteer.png' %}" alt="봉사자 신청">
+            
+        </div>
+    </div>
+
+    <!-- 하단 배너 -->
+    {% include 'footer.html' %}
+</body>
+</html>

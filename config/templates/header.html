@@ -1,0 +1,157 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Header with Toggle Menu</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .header-banner {
+            background-color: #ffffff;
+            border-bottom: 2px solid #ddd;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+        }
+
+        .header-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            transition: max-height 0.3s ease-out, opacity 0.3s ease-out, visibility 0.3s ease-out;
+        }
+
+        .header-logo img {
+            height: 60px;
+            width: auto;
+        }
+
+        .header-logo {
+            flex: 0 0 auto;
+        }
+
+        .header-nav a {
+            color: #333;
+            text-decoration: none;
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin: 0 20px;
+        }
+
+        .header-nav a:hover {
+            text-decoration: underline;
+        }
+
+        .login-signup {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 0.75rem;
+            color: #555;
+        }
+
+        /* 스마트폰 크기에서 메뉴 숨김 */
+        .toggle-menu {
+            display: none;
+        }
+
+        @media (max-width: 767px) {
+            .header-banner {
+                padding: 15px;
+                position: relative;
+                height: auto;
+            }
+
+            .header-logo img {
+                height: 50px;
+            }
+
+            .header-nav {
+                flex-direction: column; /* 세로 정렬 */
+                align-items: center; /* 메뉴 가운데 정렬 */
+                max-height: 0;
+                opacity: 0;
+                visibility: hidden;
+                overflow: hidden;
+            }
+
+            .header-nav.visible {
+                max-height: 300px; /* 충분히 큰 값으로 설정 */
+                opacity: 1;
+                visibility: visible;
+            }
+
+            .header-nav a {
+                margin: 10px 0;
+                font-size: 1rem;
+            }
+
+            .toggle-menu {
+                display: block;
+                background-color: #333;
+                color: white;
+                border: none;
+                padding: 10px;
+                font-size: 1rem;
+                cursor: pointer;
+                position: absolute;
+                top: 15px;
+                left: 15px;
+                z-index: 10;
+            }
+
+            .login-signup {
+                top: 5px;
+                right: 5px;
+                font-size: 0.65rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div style="width: 100%; height: 5px; background-color: #172d;"></div>
+    <!-- 헤드배너 -->
+    <header class="header-banner">
+        <button class="toggle-menu" onclick="toggleMenu()">☰ 메뉴</button>
+        <nav class="header-nav">
+            <a href="{% url 'webapp:donate_service' %}">기부/구매</a>
+            <a href="{% url 'webapp:business_introduce' %}">About us</a>
+            <div class="header-logo">
+                <a href="{% url 'webapp:main' %}"><img src="{% static 'images/yonsei-logo.jpg' %}" alt="Yonsei Logo"></a>
+            </div>
+            <a href="{% url 'webapp:event' %}">Events</a>
+            <a href="{% url 'webapp:notice' %}">공지사항 및 FAQ</a>
+        </nav>
+        <div class="login-signup">
+            {% if request.session.user_id %}
+                <!-- 로그인 상태 -->
+                <p>{{ request.session.user_name }}님 환영합니다 |
+                    <a href="{% url 'webapp:logout' %}">로그아웃</a> |
+                    {% if user.authorization == 2 %}
+                        <a href="{% url 'webapp:admin_page' %}">관리자페이지</a>
+                    {% else %}
+                        <a href="{% url 'webapp:mypage' %}">마이페이지</a>
+                    {% endif %}
+                </p>
+            {% else %}
+                <!-- 비로그인 상태 -->
+                <a href="{% url 'webapp:login' %}">로그인</a> /
+                <a href="{% url 'webapp:signup' %}">회원가입</a>
+            {% endif %}
+        </div>
+    </header>
+    <script>
+        function toggleMenu() {
+            const nav = document.querySelector('.header-nav');
+            nav.classList.toggle('visible');
+        }
+    </script>
+</body>
+</html>

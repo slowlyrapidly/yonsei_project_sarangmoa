@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>로그인 화면</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f3f3f3;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            position: relative;
+            width: 30%;
+            height: auto;
+        }
+        .language-select {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+        .btn {
+            width: 100%;
+            max-width: 200px;
+            padding: 15px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .btn-login {
+            background-color: #00a859;
+            color: #ffffff;
+        }
+        .btn-signup {
+            background-color: #ffffff;
+            color: #000000;
+            border: 1px solid #000000;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 1279px) and (min-width: 1024px) {
+            .container {
+                width: 40%;
+            }
+        }
+        @media (max-width: 1023px) and (min-width: 769px) {
+            .container {
+                width: 50%;
+            }
+        }
+        @media (max-width: 767px) and (min-width: 480px) {
+            .container {
+                width: 70%;
+                padding: 15px;
+            }
+            .btn {
+                max-width: 150px;
+                padding: 10px;
+                font-size: 14px;
+            }
+        }
+        @media (max-width: 479px) {
+            body {
+                flex-direction: column;
+                height: auto;
+                padding-top: 50px;
+            }
+            .container {
+                width: 90%;
+                padding: 15px;
+            }
+            .btn {
+                width: 100%;
+                padding: 10px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>로그인</h2>
+        <button class="btn btn-login">로그인</button><br>
+        <button class="btn btn-signup">회원가입</button>
+        <div class="language-select">
+            <select>
+                <option value="ko">한국어 (ko)</option>
+                <option value="en">English (en)</option>
+            </select>
+        </div>
+    </div>
+</body>
+</html>
